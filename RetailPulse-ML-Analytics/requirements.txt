@@ -1,0 +1,12 @@
+# Starter dependency list; pin tested versions after verifying locally.
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+prophet
+torch
+xgboost
+shap
+joblib
+openpyxl
