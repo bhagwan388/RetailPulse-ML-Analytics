@@ -43,3 +43,6 @@ dashboard/app_before_*.py
 # Public demo development backups
 README_before_*.md
 dashboard/public_app_before_*.py
+
+# Deployment test environment
+.venv-deploy/
