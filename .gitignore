@@ -27,3 +27,19 @@ outputs/
 .vscode/
 .idea/
 .DS_Store
+
+# Development backups
+backups/
+*.bak
+dashboard/app_*_backup.py
+dashboard/app_before_*.py
+
+# Local agent configuration
+.agents/
+
+# Local logs
+*.log
+
+# Public demo development backups
+README_before_*.md
+dashboard/public_app_before_*.py

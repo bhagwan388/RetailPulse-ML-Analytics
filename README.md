@@ -1,41 +1,130 @@
-# RetailPulse — Demand Forecasting & Customer Churn Prediction
+# RetailPulse — ML Analytics & Intelligence Hub
 
-**Portfolio extract from a collaborative internship project (July 2026).** This repository isolates my assigned **F03 Demand Forecasting** and **F04 Customer Churn Prediction** modules. Other team members' F01, F02, F05, F06 implementations are intentionally excluded.
+An end-to-end machine learning portfolio project demonstrating
+retail revenue forecasting, customer churn prediction, temporal
+evaluation, and interactive analytics.
 
-## Scope and technical work
+## Project overview
 
-### F03 — Demand Forecasting
-- Aggregated transactions into a 739-day daily revenue series.
-- Implemented Prophet and PyTorch LSTM forecasting pipelines and a hybrid experiment.
-- Produced a 30-day revenue forecast and export for downstream inventory integration.
-- **Reported evaluation:** Prophet MAPE 25.00%; LSTM MAPE 46.95%. The 12% target was not met. Hybrid evaluation requires correction; do not claim zero hybrid error.
-- Forecasts are **daily revenue**, used as a proxy for demand, **not SKU-level unit demand**.
+RetailPulse combines two independently developed modules:
 
-### F04 — Customer Churn Prediction
-- Built time-cutoff customer churn labels and recency/frequency/monetary-based features.
-- Trained, tuned, and compared XGBoost models; added feature selection, leakage audit, and SHAP explanations.
-- **Reported held-out results (six-feature model):** ROC-AUC 0.8187, recall 0.9097, Precision@Top20% 0.9009 (191 actual churners among 212 highest-risk customers). The 0.88 ROC-AUC target was not met.
-- The original report recommends further temporal validation.
+- F03: Daily revenue forecasting
+- F04: Customer churn prediction
 
-## Layout
+This repository is a curated extract from a collaborative
+internship project (July 2026). It documents my assigned
+F03 and F04 contributions. Other team members' modules
+are not claimed as my individual work.
 
-- `src/forecasting/` — original non-empty F03 Python scripts
-- `src/churn/` — original non-empty F04 Python scripts
-- `requirements.txt` — initial dependency list (not yet reproducibility-tested)
+## Interactive dashboard
 
-## Important setup note
+The Streamlit public demo contains five tabs:
 
-This is a **source-only curated portfolio extract**, not yet a turnkey application. The scripts preserve their original relative paths and may expect data files, saved models, and output folders from the full team repository. To run the complete pipelines, review each script's expected paths, supply licensed or synthetic datasets, and verify dependencies. No performance numbers have been re-evaluated in this extract.
+1. Synthetic customer analytics overview
+2. Historical demand forecasting
+3. Synthetic customer risk explorer
+4. Historical model evaluation
+5. Simulated feature contributions
 
-Do not upload private customer records or sensitive datasets. Obtain permission before publishing any shared internship material.
+Run locally:
 
-## Next steps
+    pip install -r dashboard/requirements.txt
+    streamlit run dashboard/public_app.py
 
-1. Refactor paths and configuration to run independently.
-2. Add a small synthetic dataset and smoke tests.
-3. Reproduce evaluation metrics and document exact environment versions.
-4. Add a standalone Streamlit demonstration and screenshots.
+## F03 — Revenue forecasting
+
+- Daily transaction series: 739 days
+- Model: Facebook Prophet
+- Forecast horizon: 30 days
+- Evaluation: Five retrospective 30-day test windows
+- Baseline: Seasonal naive, repeating the previous week's values
+
+Average rolling-backtest results:
+
+| Metric | Prophet | Seasonal naive |
+|---|---:|---:|
+| MAE | 10,193.72 | 12,232.29 |
+| RMSE | 15,857.58 | 17,627.94 |
+| WAPE | 28.21% | 34.67% |
+
+Prophet achieved lower MAE in four of five windows.
+The average window MAE was approximately 16.7% lower
+than the baseline.
+
+These are retrospective results on historical data,
+not production performance guarantees.
+
+The forecasts represent aggregate daily revenue,
+not SKU-level unit demand. Currency is not independently verified.
+
+## F04 — Customer churn prediction
+
+Model: XGBoost
+
+Evaluation uses chronological training, validation,
+and an out-of-time test snapshot.
+
+Historical final test:
+
+| Metric | Result |
+|---|---:|
+| Test customers | 5,281 |
+| ROC-AUC | 0.7949 |
+| Accuracy | 71.79% |
+| Precision | 68.66% |
+| Recall | 92.34% |
+| F1 | 0.7876 |
+| Precision at top 20% | 88.17% |
+
+The churn prediction horizon is 90 days.
+
+These results are historical evaluation metrics.
+They do not describe the synthetic customers in the public demo.
+
+## Public demonstration data
+
+The public dashboard uses synthetic customer IDs,
+artificial churn outcomes, simulated risk scores,
+and randomly generated feature contributions.
+
+The simulated contributions are NOT genuine SHAP
+explanations and are not linked to the risk scores.
+
+Historical aggregate evaluation reports and forecasting
+artifacts are included for research demonstration,
+subject to applicable publication permissions.
+
+The original transaction dataset, trained models,
+and customer-level test records are excluded.
+
+## Technology
+
+Python, Pandas, NumPy, Prophet, XGBoost,
+scikit-learn, SHAP, Plotly, and Streamlit.
+
+## Repository structure
+
+- dashboard/app.py: Original local dashboard
+- dashboard/public_app.py: Public demonstration
+- dashboard/requirements.txt: Dashboard dependencies
+- demo_data/: Public demonstration artifacts
+- scripts/create_demo_data.py: Synthetic data generator
+- src/forecasting/: F03 implementation
+- src/churn/: F04 implementation
+
+## Limitations
+
+- Historical data is not a live retail feed.
+- Prophet's yearly seasonality is weakly identified in
+  early rolling windows with less than two years of history.
+- The public dashboard is not a production inference service.
+- Synthetic customer scores and simulated feature
+  contributions must not be interpreted as model outputs.
+- The historical evaluation reports do not validate
+  the synthetic customer records.
 
 ## Attribution
 
-Collaborative RetailPulse internship project. This repository documents only the F03 and F04 assigned contributions. Other modules and the original team dashboard are not claimed as individual work.
+RetailPulse was developed as a collaborative internship
+project. This repository focuses on my assigned forecasting
+and churn-prediction modules.
