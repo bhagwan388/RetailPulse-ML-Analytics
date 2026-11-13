@@ -1,0 +1,29 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environment variables
+.env
+.env.*
+
+# Original datasets
+data/raw/
+data/processed/
+
+# Trained models
+models/
+*.pkl
+*.joblib
+*.pt
+*.pth
+
+# Generated outputs
+outputs/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
